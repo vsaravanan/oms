@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import { GET_CUSTOMER } from '@/graphql/queries'
 import useStore from '@/store/store'
@@ -7,14 +7,19 @@ export default function CustomerList() {
   const { customers, selectedCustomer, setSelectedCustomer, setError } = useStore()
   const [customerIdInput, setCustomerIdInput] = useState('')
 
-  const [getCustomer] = useLazyQuery(GET_CUSTOMER, {
-    onCompleted: data => {
+  const [getCustomer, { called, loading, data, error }] = useLazyQuery(GET_CUSTOMER)
+
+  useEffect(() => {
+    if (data && data.getCustomer) {
       setSelectedCustomer(data.getCustomer)
-    },
-    onError: error => {
+    }
+  }, [data, setSelectedCustomer])
+
+  useEffect(() => {
+    if (error) {
       setError(error.message)
-    },
-  })
+    }
+  }, [error, setError])
 
   const handleCustomerClick = customer => {
     getCustomer({ variables: { customerId: customer.customerId } })
@@ -31,6 +36,11 @@ export default function CustomerList() {
     setCustomerIdInput('')
   }
   const validCustomers = customers.filter(customer => customer != null)
+
+  // Show loading state if needed
+  if (called && loading) {
+    return <div>Loading customer details...</div>
+  }
 
   return (
     <div className='bg-white p-6 rounded-lg shadow'>

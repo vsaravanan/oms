@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import { GET_ORDER } from '@/graphql/queries'
 import useStore from '@/store/store'
@@ -7,14 +7,21 @@ export default function OrderList() {
   const [orderIdInput, setOrderIdInput] = useState('')
   const { orders, selectedOrder, setSelectedOrder, setError } = useStore()
 
-  const [getOrder, { loading }] = useLazyQuery(GET_ORDER, {
-    onCompleted: data => {
+  const [getOrder, { called, loading, data, error }] = useLazyQuery(GET_ORDER)
+
+  // Handle successful data response
+  useEffect(() => {
+    if (data && data.getOrder) {
       setSelectedOrder(data.getOrder)
-    },
-    onError: error => {
+    }
+  }, [data, setSelectedOrder])
+
+  // Handle errors
+  useEffect(() => {
+    if (error) {
       setError(error.message)
-    },
-  })
+    }
+  }, [error, setError])
 
   const handleOrderClick = order => {
     getOrder({ variables: { orderId: order.orderId } })
@@ -27,6 +34,11 @@ export default function OrderList() {
       return
     }
     getOrder({ variables: { orderId: orderIdInput.trim() } })
+  }
+
+  // Optional: Show loading state
+  if (called && loading) {
+    return <div>Loading order details...</div>
   }
 
   return (
