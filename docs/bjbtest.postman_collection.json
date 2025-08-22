@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "8bccd866-7d34-4a78-a755-b27b66e8a6c2",
+		"name": "bjbtest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "691160"
+	},
+	"item": [
+		{
+			"name": "/api/customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n  \"name\": \"Saravanan Viswanathan\",\r\n  \"email\": \"saravanan@example.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{http}}://{{server}}:{{port}}/api/customer",
+					"protocol": "{{http}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/orders",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": 1,\r\n\r\n    \"items\": [\r\n        {\r\n            \"itemId\": 1,\r\n            \"productId\": \"P123\",\r\n            \"quantity\": 2,\r\n            \"price\": 20.00\r\n        },\r\n        {\r\n            \"itemId\": 2,\r\n            \"productId\": \"P456\",\r\n            \"quantity\": 1,\r\n            \"price\": 60.00\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{http}}://{{server}}:{{port}}/api/orders",
+					"protocol": "{{http}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/orders/orderId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{http}}://{{server}}:{{port}}/api/orders/1",
+					"protocol": "{{http}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/customers/1/orders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{http}}://{{server}}:{{port}}/api/customers/1/orders",
+					"protocol": "{{http}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"customers",
+						"1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/orders/orderId delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{http}}://{{server}}:{{port}}/api/orders/1",
+					"protocol": "{{http}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "graphql getOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "\r\n{\r\n  getOrder(orderId: \"1\") {\r\n    totalAmount\r\n    status\r\n    createdAt\r\n  }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{http}}://{{server}}:{{port}}/{{graphql}}",
+					"protocol": "{{http}}",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{graphql}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
