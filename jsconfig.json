@@ -1,7 +1,17 @@
 {
   "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "jsx": "react-jsx", // or "react" or "preserve" depending on setup
+    "allowJs": true,
+    "checkJs": false,
+  
+
+
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist", "build"]
 }
